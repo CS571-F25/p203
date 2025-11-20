@@ -9,18 +9,15 @@ import AboutPage from './pages/AboutPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  // 1. Initialize state from localStorage (if it exists)
   const [drinks, setDrinks] = useState(() => {
     const savedDrinks = localStorage.getItem('caffeineLog');
     return savedDrinks ? JSON.parse(savedDrinks) : [];
   });
 
-  // 2. Save to localStorage whenever 'drinks' changes
   useEffect(() => {
     localStorage.setItem('caffeineLog', JSON.stringify(drinks));
   }, [drinks]);
 
-  // 3. Helper function to add a drink safely
   function handleAddDrink(drink) {
     setDrinks(prevDrinks => [...prevDrinks, drink]);
   }

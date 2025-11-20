@@ -1,13 +1,10 @@
-/* Make the root container fill the width */
 #root {
   width: 100%;
   margin: 0;
   padding: 0;
-  text-align: left; /* Resets text to left-align like a real website */
+  text-align: left; 
 }
 
-/* Optional: Keep these if you use the spinning logo elsewhere, 
-   otherwise you can delete them too */
 .logo {
   height: 6em;
   padding: 1.5em;
