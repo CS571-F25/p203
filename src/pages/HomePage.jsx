@@ -1,26 +1,33 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import Header from '../components/Header';
 import CaffeineMeter from '../components/CaffeineMeter';
+import WarningBanner from '../components/WarningBanner';
+import DrinkList from '../components/DrinkList';
 
-export default function HomePage({ drinks }) {
+// Now accepts 'limit' as a prop
+export default function HomePage({ drinks, limit }) {
+  // Calculate total caffeine
   const totalCaffeine = drinks.reduce((total, drink) => total + drink.amount, 0);
 
   return (
-    <div> 
-      <div className="mb-5"> {/* Removed text-center to align left like a dashboard, add back if you want */}
-        <h1>Caffeine Companion</h1>
-        <p className="lead">Track your intake, stay within safe limits.</p>
-      </div>
+    <div>
+      <Header 
+        title="Dashboard" 
+        subtitle={`Daily Goal: Keep under ${limit}mg`} 
+      />
+      
+      <WarningBanner currentAmount={totalCaffeine} limit={limit} />
 
-      {/* CHANGE: Remove Row/Col constraints to let it stretch */}
-      <CaffeineMeter currentAmount={totalCaffeine} />
+      <Row className="justify-content-center">
+        <Col md={8}>
+          {/* Dynamic Meter based on personal limit */}
+          <CaffeineMeter currentAmount={totalCaffeine} limit={limit} />
+        </Col>
+      </Row>
 
-      <h4 className="mt-5">Today's Log</h4>
-      <ul>
-        {drinks.map(d => (
-          <li key={d.id}>{d.name} - {d.amount}mg</li>
-        ))}
-      </ul>
+      <h2 className="mt-5 h4">Today's Log</h2>
+      <DrinkList drinks={drinks} />
     </div>
   )
 }
